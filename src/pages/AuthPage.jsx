@@ -194,7 +194,7 @@ function AuthPage() {
                   placeholder="Min 8 chars, 1 digit, 1 special (!@#$%^&*)"
                   id="password"
                   onChange={handleChange}
-                  autocomplete="current-password"
+                  autoComplete="current-password"
                   value={formData.password || ''}
                   className="mt-1"
                 />
@@ -250,7 +250,7 @@ function AuthPage() {
                   onChange={handleChange}
                   value={formData.username || ''}
                   className="mt-1"
-                  autocomplete="current-username"
+                  autoComplete="current-username"
                 />
               </div>
               <div>
@@ -262,7 +262,7 @@ function AuthPage() {
                   onChange={handleChange}
                   value={formData.email || ''}
                   className="mt-1"
-                  autocomplete="current-email"
+                  autoComplete="current-email"
                 />
               </div>
               <div>
@@ -272,7 +272,7 @@ function AuthPage() {
                   placeholder="Password"
                   id="password"
                   onChange={handleChange}
-                  autocomplete="current-password"
+                  autoComplete="current-password"
                   value={formData.password || ''}
                   className="mt-1"
                 />

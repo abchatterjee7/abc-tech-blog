@@ -1,13 +1,6 @@
 import { Alert, Button, FileInput, Select, TextInput } from 'flowbite-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from 'firebase/storage';
-import { app } from '../firebase';
 import { useEffect, useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -54,29 +47,32 @@ export default function UpdatePost() {
         return;
       }
       setImageUploadError(null);
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + '-' + file.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setImageUploadProgress(progress.toFixed(0));
-        },
-        (error) => {
-          setImageUploadError('Image upload failed');
-          setImageUploadProgress(null);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setImageUploadProgress(null);
-            setImageUploadError(null);
-            setFormData({ ...formData, image: downloadURL });
-          });
-        }
-      );
+      
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', file);
+      
+      setImageUploadProgress(50);
+      
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/upload/image`, {
+        method: 'POST',
+        body: uploadFormData,
+        credentials: 'include',
+      });
+      
+      const data = await res.json();
+      
+      if (!res.ok) {
+        setImageUploadError(data.message || 'Image upload failed');
+        setImageUploadProgress(null);
+        return;
+      }
+      
+      if (data.success) {
+        setImageUploadProgress(null);
+        setImageUploadError(null);
+        setFormData({ ...formData, image: data.url });
+      }
+      
     } catch (error) {
       setImageUploadError('Image upload failed');
       setImageUploadProgress(null);
@@ -86,6 +82,11 @@ export default function UpdatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (!formData._id) {
+        setPublishError('Post ID not found');
+        return;
+      }
+      
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/post/updatepost/${formData._id}/${currentUser._id}`, {
         method: 'PUT',
         headers: {
@@ -122,13 +123,13 @@ export default function UpdatePost() {
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
-            value={formData.title}
+            value={formData.title || ''}
           />
           <Select
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
             }
-            value={formData.category}
+            value={formData.category || ''}
           >
             <option value='uncategorized'>Select a category</option>
             <option value='java'>Java</option>
@@ -183,7 +184,7 @@ export default function UpdatePost() {
         )}
         <ReactQuill
           theme='snow'
-          value={formData.content}
+          value={formData.content || ''}
           placeholder='Write something...'
           className='h-72 mb-12'
           required
