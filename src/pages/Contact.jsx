@@ -283,7 +283,7 @@ export default function Contact() {
                     </svg>
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/aaditya-bachchu-chatterjee-0485933b/"
+                    href="https://www.linkedin.com/in/abchatterjee7/"
                     className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-purple-400 transition-colors duration-200"
                     aria-label="LinkedIn"
                   >
@@ -292,7 +292,7 @@ export default function Contact() {
                     </svg>
                   </a>
                   <a
-                    href="https://github.com/AadityaUoHyd"
+                    href="https://github.com/abchatterjee7"
                     className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-purple-400 transition-colors duration-200"
                     aria-label="GitHub"
                   >

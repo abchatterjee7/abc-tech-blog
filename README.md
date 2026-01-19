@@ -79,7 +79,7 @@ abc-tech-blog-backend
 
 ## Setup Instructions
 1. Clone the Repository
-git clone https://github.com/AadityaUoHyd/abc-tech-blog.git
+git clone https://github.com/abchatterjee7/abc-tech-blog.git
 cd abc-tech-blog
 
 2. Install Dependencies
@@ -219,7 +219,7 @@ Connect with me, Aaditya B Chatterjee, to discuss tech, collaborate, or share id
 Email: aadityaraj.raj402@gmail.com
 X: @AadityaRaj8
 LinkedIn: Aaditya B Chatterjee
-GitHub: AadityaUoHyd
+GitHub: abchatterjee7
 YouTube: @geopolitiksimplified
 Medium: @aadityabchatterjee
 Geopolitical Blog: Dear ABC

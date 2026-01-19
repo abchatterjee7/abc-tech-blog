@@ -172,7 +172,7 @@ export default function FooterCom() {
               className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-purple-400 transition-colors duration-200 text-xl"
             />
             <Footer.Icon
-              href="https://github.com/AadityaUoHyd"
+              href="https://github.com/abchatterjee7"
               icon={BsGithub}
               className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-purple-400 transition-colors duration-200 text-xl"
             />

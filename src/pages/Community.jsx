@@ -21,7 +21,7 @@ export default function Community() {
       id: '3',
       title: 'Contribute Content',
       description: 'Submit tutorials or projects to our blog.',
-      url: 'https://github.AadityaUoHyd',
+      url: 'https://github.abchatterjee7',
       icon: '✍️',
     },
   ];
