@@ -23,7 +23,7 @@ export default function FooterCom() {
               Empowering tech enthusiasts with insights, tutorials, and updates on the latest innovations.
             </p>
             <p className="mt-8 text-gray-600 dark:text-gray-400 text-sm max-w-xs">
-              Connect for Freelancing - <span className='text:black dark:text-white hover:text-blue-500 dark:hover:text-blue-500 hover:underline dark:hover:underline'><a href="https://www.linkedin.com/in/bachchu-chatterjee-0485933b/">Aaditya B Chatterjee</a>.</span>
+              Connect for Freelancing - <span className='text:black dark:text-white hover:text-blue-500 dark:hover:text-blue-500 hover:underline dark:hover:underline'><a href="https://www.linkedin.com/in/abchatterjee7/">Aaditya B Chatterjee</a>.</span>
             </p>
           </div>
 
@@ -177,7 +177,7 @@ export default function FooterCom() {
               className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-purple-400 transition-colors duration-200 text-xl"
             />
             <Footer.Icon
-              href="https://www.linkedin.com/in/bachchu-chatterjee-0485933b/"
+              href="https://www.linkedin.com/in/abchatterjee7/"
               icon={BsLinkedin}
               className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-purple-400 transition-colors duration-200 text-xl"
             />
