@@ -1,13 +1,6 @@
 import { Alert, Button, Modal, ModalBody, TextInput } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from 'firebase/storage';
-import { app } from '../firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {
@@ -51,45 +44,47 @@ export default function DashProfile() {
   }, [imageFile]);
 
   const uploadImage = async () => {
-    // service firebase.storage {
-    //   match /b/{bucket}/o {
-    //     match /{allPaths=**} {
-    //       allow read;
-    //       allow write: if
-    //       request.resource.size < 2 * 1024 * 1024 &&
-    //       request.resource.contentType.matches('image/.*')
-    //     }
-    //   }
-    // }
     setImageFileUploading(true);
     setImageFileUploadError(null);
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + imageFile.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, imageFile);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    
+    try {
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', imageFile);
+      
+      setImageFileUploadProgress(50);
+      
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/upload/image`, {
+        method: 'POST',
+        body: uploadFormData,
+        credentials: 'include',
+      });
 
-        setImageFileUploadProgress(progress.toFixed(0));
-      },
-      (error) => {
-        toast.error('Could not upload image (File must be less than 2MB)', { position: 'top-right', toastId: 'image-upload-error' });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        toast.error(data.message || 'Image upload failed', { position: 'top-right', toastId: 'image-upload-error' });
         setImageFileUploadProgress(null);
         setImageFile(null);
         setImageFileUrl(null);
         setImageFileUploading(false);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageFileUrl(downloadURL);
-          setFormData({ ...formData, profilePicture: downloadURL });
-          setImageFileUploading(false);
-        });
+        return;
       }
-    );
+      
+      if (data.success) {
+        setImageFileUploadProgress(100);
+        setImageFileUrl(data.url);
+        setFormData({ ...formData, profilePicture: data.url });
+        setImageFileUploading(false);
+        setTimeout(() => setImageFileUploadProgress(null), 1000);
+      }
+      
+    } catch (error) {
+      toast.error('Image upload failed', { position: 'top-right', toastId: 'image-upload-error' });
+      setImageFileUploadProgress(null);
+      setImageFile(null);
+      setImageFileUrl(null);
+      setImageFileUploading(false);
+    }
   };
 
   const handleChange = (e) => {
